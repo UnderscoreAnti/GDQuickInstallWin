@@ -10,8 +10,8 @@ def create_config():
 
     new_config = open("settings.txt", 'w')
 
-    download_folder = input("Please enter the Godot ZIP download location")
-    install_folder = input("Please enter the installation location")
+    download_folder = input("Please enter the Godot ZIP download location\n")
+    install_folder = input("Please enter the installation location\n")
 
     print("Thank you! \n\nSaving...")
 
@@ -45,8 +45,8 @@ def change_config():
 
     if con_set:
         print("Using 1 or 2, please choose an option to edit:")
-        choose_edit = input("1.) Downloads >> {0}\n2.) Installation >> {1}".format(con_set[0], con_set[1]))
-        new_setting = input("Please enter the new directory:")
+        choose_edit = input("1.) Downloads >> {0}\n2.) Installation >> {1}\n".format(con_set[0], con_set[1]))
+        new_setting = input("Please enter the new directory:\n")
 
     else:
         print("This really shouldn't happen please dear lord don't let this happen")
@@ -80,5 +80,38 @@ def delete_old_godot():
     pass
 
 
+def print_command_list():
+    pass
+
+
+def start_installation():
+    pass
+
+
+def delete_installation():
+    pass
+
+
+def new_command():
+
+    commands_dict = {
+        "-c": print_command_list(),
+        "-create_cfg": create_config(),
+        "-change_cfg": change_config(),
+        "-install_gd": start_installation(),
+        "-delete_gd": delete_installation(),
+    }
+
+    cmnd = input("Hello!\n")
+
+    if cmnd in commands_dict:
+        commands_dict[cmnd]
+
+    else:
+        print("Please enter a valid command. '-c' will show you the command list.")
+
+
+
+
 if __name__ == '__main__':
-    create_config()
+    pass
