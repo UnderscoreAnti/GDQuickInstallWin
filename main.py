@@ -90,7 +90,6 @@ def get_godot_zip(removable=[]):
     contents = os.listdir(settings[0])
     for tent in contents:
         if "Godot_v" in tent and not removable and tent.endswith(".zip"):
-            print(tent)
             size_check.append(tent)
 
     newest_version = ""
@@ -131,9 +130,10 @@ def check_installation(curr, rem):
     current_version_check = input("Use version '{0}' ? ('y' = yes, 'n' = no)\n".format(curr))
 
     if current_version_check == 'y':
-        move_godot_zip()
+        i am here!
     elif current_version_check == 'n':
         curr, rem = get_godot_zip(rem)
+        check_installation(curr, rem)
     else:
         print("Invalid entry, aborting and attempting operation again...")
         start_installation()
