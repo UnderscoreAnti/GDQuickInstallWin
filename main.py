@@ -5,6 +5,14 @@ import shutil
 import win32com.client
 import zipfile as zf
 
+# Copyright underscoreAnti (c) 2023
+# Run with admin rights
+
+## Tested with Godot Mono, Windows 10, GD ver 3.5+
+## Move freshly downlooaded GD zip files to your chosen destination
+## Create shortcuts with EASE
+## Please let me know if you find any issues.
+
 
 def create_config():
     appdata_dir = os.getenv('APPDATA') + r"\Godot\app_userdata\GDQuickInstall"
@@ -148,6 +156,7 @@ def create_engine_shortcut():
     shortcut.IconLocation = exec
 
     shortcut.save()
+    print("Shortcut has been created!\n")
 
     new_command()
 
@@ -189,11 +198,14 @@ def copy_util(src, dst):
             shutil.copytree(temp_src, temp_dst)
 
 
-def move_godot_zip(curr, settings):
+def install_godot_files(curr, settings):
     print("Installing...")
 
     if os.listdir(settings[1]):
         delete_old_godot()
+
+    elif not os.path.exists(settings[1]):
+        os.mkdir(settings[1])
 
     with zf.ZipFile("{0}\\{1}".format(settings[0], curr), 'r') as zip_obj:
         zip_obj.extractall(settings[0])
@@ -221,7 +233,8 @@ def print_command_list():
                       + " installation already exists",
         "--create-stct": "Creates a shortcut in the specified directory",
         "--delete-data": "Deletes the config directory for this script.",
-        "--clear": "Clears the screen. Now supports Windows!"
+        "--clear": "Clears the screen. Now supports Windows!",
+        "--q": "Quits the program.",
     }
 
     print("Commands:")
@@ -245,7 +258,7 @@ def confirm_installation(curr, rem):
     current_version_check = input("Use version '{0}' ? ('y' = yes, 'n' = no)\n:) >>  ".format(curr))
 
     if current_version_check == 'y':
-        move_godot_zip(curr, get_config())
+        install_godot_files(curr, get_config())
     elif current_version_check == 'n':
         rem.append(curr)
         curr, rem = get_godot_zip(rem)
@@ -290,6 +303,7 @@ def get_commands():
         "--clear": clear_screen,
         "--delete-data": delete_config_data,
         "--create-stct": create_engine_shortcut,
+        "--q": quit
     }
 
     return out_dict
